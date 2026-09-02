@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Автосалон - Вход / Регистрация</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .auth-card {
+            max-width: 420px;
+            width: 100%;
+        }
+    </style>
+</head>
+<body class="bg-light d-flex align-items-center min-vh-100 py-5">
+
+    <div class="container d-flex justify-content-center">
+        <div class="card shadow auth-card">
+            <div class="card-body p-4">
+                <h3 class="card-title text-center mb-4" id="formTitle">Вход в систему</h3>
+
+                <!-- Форма авторизации (По умолчанию активна) -->
+                <form id="loginForm">
+                    <div class="mb-3">
+                        <label for="loginEmail" class="form-label">Email</label>
+                        <input type="email" class="form-control" id="loginEmail" required placeholder="name@example.com">
+                    </div>
+                    <div class="mb-3">
+                        <label for="loginPassword" class="form-label">Пароль</label>
+                        <input type="password" class="form-control" id="loginPassword" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100 mb-3">Войти</button>
+                </form>
+
+                <!-- Форма регистрации (По умолчанию скрыта) -->
+                <form id="registerForm" class="d-none">
+                    <div class="mb-3">
+                        <label for="regName" class="form-label">Имя</label>
+                        <input type="text" class="form-control" id="regName" required placeholder="Иван">
+                    </div>
+                    <div class="mb-3">
+                        <label for="regEmail" class="form-label">Email</label>
+                        <input type="email" class="form-control" id="regEmail" required placeholder="name@example.com">
+                    </div>
+                    <div class="mb-3">
+                        <label for="regPassword" class="form-label">Пароль</label>
+                        <input type="password" class="form-control" id="regPassword" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="regConfirmPassword" class="form-label">Подтверждение пароля</label>
+                        <input type="password" class="form-control" id="regConfirmPassword" required>
+                    </div>
+                    <button type="submit" class="btn btn-success w-100 mb-3">Зарегистрироваться</button>
+                </form>
+
+                <!-- Кнопка переключения форм -->
+                <div class="text-center mb-3">
+                    <span id="toggleText">Нет аккаунта?</span>
+                    <button type="button" class="btn btn-link p-0 text-decoration-none ms-1" id="toggleAuthBtn">Зарегистрироваться</button>
+                </div>
+
+                <!-- Пустая кнопка / ссылка для гостей -->
+                <div class="border-top pt-3 text-center">
+                    <a href="index.html" class="btn btn-outline-secondary btn-sm w-100" id="guestBtn">Войти как гость</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const loginForm = document.getElementById('loginForm');
+        const registerForm = document.getElementById('registerForm');
+        const formTitle = document.getElementById('formTitle');
+        const toggleAuthBtn = document.getElementById('toggleAuthBtn');
+        const toggleText = document.getElementById('toggleText');
+
+        let isLogin = true;
+
+        toggleAuthBtn.addEventListener('click', () => {
+            isLogin = !isLogin;
+
+            if (isLogin) {
+                loginForm.classList.remove('d-none');
+                registerForm.classList.add('d-none');
+                formTitle.textContent = 'Вход в систему';
+                toggleText.textContent = 'Нет аккаунта?';
+                toggleAuthBtn.textContent = 'Зарегистрироваться';
+            } else {
+                loginForm.classList.add('d-none');
+                registerForm.classList.remove('d-none');
+                formTitle.textContent = 'Регистрация';
+                toggleText.textContent = 'Уже есть аккаунт?';
+                toggleAuthBtn.textContent = 'Войти';
+            }
+        });
+    </script>
+</body>
+</html>
