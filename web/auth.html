@@ -67,6 +67,8 @@
         </div>
     </div>
 
+    <script src="js/api.js"></script>
+
     <script>
         const loginForm = document.getElementById('loginForm');
         const registerForm = document.getElementById('registerForm');
@@ -78,7 +80,6 @@
 
         toggleAuthBtn.addEventListener('click', () => {
             isLogin = !isLogin;
-
             if (isLogin) {
                 loginForm.classList.remove('d-none');
                 registerForm.classList.add('d-none');
@@ -91,6 +92,43 @@
                 formTitle.textContent = 'Регистрация';
                 toggleText.textContent = 'Уже есть аккаунт?';
                 toggleAuthBtn.textContent = 'Войти';
+            }
+        });
+
+        loginForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+
+            const res = await API.login(email, password);
+
+            if (res.ok) {
+                window.location.href = 'index.html';
+            } else {
+                alert('Ошибка входа: ' + (res.data || 'Неверный email или пароль'));
+            }
+        });
+
+        registerForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const name = document.getElementById('regName').value;
+            const email = document.getElementById('regEmail').value;
+            const password = document.getElementById('regPassword').value;
+            const confirmPassword = document.getElementById('regConfirmPassword').value;
+
+            if (password !== confirmPassword) {
+                alert('Пароли не совпадают');
+                return;
+            }
+
+            const res = await API.register(name, email, password, confirmPassword);
+
+            if (res.ok) {
+                window.location.href = 'index.html';
+            } else {
+                alert('Ошибка регистрации: ' + (res.data || 'Пользователь уже существует'));
             }
         });
     </script>
